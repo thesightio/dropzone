@@ -3,12 +3,10 @@
 import { Flex, Text } from '@chakra-ui/react'
 import { useCityQuery } from '@/lib/cities/queries'
 
-import Dropzone from "@/components/dropZone"
+import Dropzone from "@/components/dropZone/dropZone"
 import { Action } from 'react-query/types/core/query';
 
 export default function Home() {
-  const { data: { city } = {} } = useCityQuery()
-
   return (
     <>
       <Flex justify="center" align="center" w="100%" h="100%" direction="column">
