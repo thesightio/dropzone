@@ -1,0 +1,78 @@
+$cubic: cubic-bezier(0.445, 0.050, 0.550, 0.950);
+$time: 0.15s;
+
+.dropzone {
+    position:relative;
+    width: 600px;
+    min-height: 400px;
+    border: 2px dashed rgba(#d9dcec, 0.7);
+    border-radius: 30px;
+    padding: 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+
+    &__input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    &__file {
+        border-radius: 15px;
+        background: #d9dcec;
+        position: relative;
+        overflow: hidden;
+
+        &:hover {
+            .dropzone__file_remove {
+                opacity: 1;
+            }
+        }
+
+        img {
+            opacity: 1;
+        }
+
+        &_loading {
+            pointer-events: none;
+
+            img {
+                opacity: 0.2;
+                transition: opacity $time $cubic;
+            }
+        }
+
+        &_loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -12px 0 0 -12px;
+        }
+
+        &_progress {
+            position: absolute;
+        }
+
+        &_remove {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(#222, 0.5);
+            backdrop-filter: blur(20px);
+            opacity: 0;
+            transition: opacity $time $cubic;
+        }
+    }
+}

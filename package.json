@@ -1,0 +1,36 @@
+{
+  "name": "test-task",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^2.8.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@types/formidable": "^3.4.1",
+    "@types/node": "20.4.9",
+    "@types/react": "18.2.20",
+    "@types/react-dom": "18.2.7",
+    "@types/uuid": "^9.0.2",
+    "classnames": "^2.3.2",
+    "eslint": "8.47.0",
+    "eslint-config-next": "13.4.13",
+    "formidable": "^3.5.0",
+    "framer-motion": "^10.15.1",
+    "next": "13.4.13",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.10.1",
+    "react-query": "^3.39.3",
+    "typescript": "5.1.6",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "sass": "^1.65.1"
+  }
+}
