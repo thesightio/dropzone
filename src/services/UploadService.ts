@@ -1,4 +1,4 @@
-import axios, { AxiosProgressEvent } from 'axios'
+import axios from 'axios'
 
 const upload = (file:File, onUploadProgress:any, onError: any, onFinnaly: any) => {
   let formData:FormData = new FormData();
@@ -11,7 +11,6 @@ const upload = (file:File, onUploadProgress:any, onError: any, onFinnaly: any) =
       },
       onUploadProgress
   })
-  // .then()
   .catch(onError)
   .finally(onFinnaly);
 };

@@ -3,9 +3,9 @@ import React, {useState, useEffect} from 'react';
 import { Flex, Grid, Heading, Text, useToast  } from '@chakra-ui/react'
 import { IconContext } from "react-icons";
 import { PiImagesSquareDuotone } from "react-icons/pi"
-import axios, { AxiosProgressEvent } from 'axios'
+import { AxiosProgressEvent } from 'axios'
 import cn from "classnames"
-import FilePreview from "@/components/filePreview"
+import FilePreview from "@/components/filePreview/filePreview"
 import styles from "@/styles/dropzone.module.scss"
 import upload from "@/services/UploadService";
 
@@ -29,20 +29,20 @@ const DropZone = (): JSX.Element => {
         'image/webp'
     ]
 
-    const handleFiles = (e: any):void => {
-        let files = [...e.target.files]
+    const handleFiles = (e: Event):void => {
+        let files = [...e.target?.files]
         fileProcessing(files)
     }
 
-    const handleDrop = (e: any):void => {
+    const handleDrop = (e: DragEvent):void => {
         e.preventDefault();
-        let files = [...e.dataTransfer.files]
+        let files = [...e.dataTransfer?.files]
         fileProcessing(files)
     }
 
     const fileProcessing = (files: File[]) => {
         setDragOver(false)
-        
+
         if(files?.length) {
             const fileNames = fileList?.map((file: IItem) => file.file.name)
             files = files.filter((file) => !fileNames?.includes(file.name))
@@ -62,7 +62,6 @@ const DropZone = (): JSX.Element => {
     }
 
     const checkFile = (info: File):boolean => {
-        console.log('CheckFile', info);
         if(info.size / (1024*1024) > 3) {
             toast({
                 title: 'Ошибка',
@@ -84,13 +83,30 @@ const DropZone = (): JSX.Element => {
         return true
     }
 
+    const removeFile = (e: Event, item:IItem) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        if(item.status === 'Loaded') {
+            setFileList(fileList?.filter((file:IItem) => (file !== item)))
+
+            toast({
+                title: 'Успешно',
+                description: "Фаил успешно удален",
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
+        }
+    }
+
     useEffect(() => {
         if (fileList?.length) {
             uploadFiles(fileList)
         }
     }, [fileList])
 
-    const uploadFiles = async(fileItems: IItem[]):void => {
+    const uploadFiles = async(fileItems: IItem[]) => {
         try {
             let i:number = 0
             for(const item of fileItems) {
@@ -106,7 +122,9 @@ const DropZone = (): JSX.Element => {
         if(fileItem.status !== 'Loaded') {
             fileItem.status = 'Started'
             upload(fileItem.file, (e: AxiosProgressEvent):void => {
-                setProgress(Math.round((100 * e.loaded) / e.total))
+                if(e.total) {
+                    setProgress(Math.round((100 * e.loaded) / e.total))
+                }
             }, () =>{
                 toast({
                     title: 'Ошибка',
@@ -117,7 +135,6 @@ const DropZone = (): JSX.Element => {
                 })
                 reject(true)
             }, () => {
-                console.log("FINISHED")
                 setTimeout(() => {
                     setProgress(0)
                     fileItem.status = 'Loaded'
@@ -129,12 +146,12 @@ const DropZone = (): JSX.Element => {
         }
     })
 
-    const preventDrag = (e) => {
+    const preventDrag = (e:Event) => {
         e.preventDefault()
         setDragOver(true)
     }
 
-    const preventLeaveDrag = (e) => {
+    const preventLeaveDrag = (e:Event) => {
         e.preventDefault()
         setDragOver(false)
     }
@@ -151,9 +168,9 @@ const DropZone = (): JSX.Element => {
                     <Text opacity="0.5" marginTop="10px">Кликните по области или перетащите в нее файлы формата PNG, JPG, WebP или SVG.</Text>
                 </Flex>}
 
-                {fileList?.length && <Grid templateColumns='repeat(4, 1fr)' gap={6} position="absolute" top="0" left="0" width="100%" padding="40px">
+                {(fileList && fileList.length > 0) && <Grid templateColumns='repeat(4, 1fr)' gap={6} position="absolute" top="0" left="0" width="100%" padding="40px" zIndex="1">
                     {fileList?.map((item: IItem) => (
-                        <PreviewItem info={item} progress={progress} key={item.file.lastModified}/>
+                        <PreviewItem info={item} progress={progress} key={item.file.lastModified} onClick={(e) => removeFile(e, item)}/>
                     ))}
                 </Grid>}
             </label>
