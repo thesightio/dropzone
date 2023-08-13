@@ -161,7 +161,7 @@ const DropZone = (): JSX.Element => {
         <form action="/" onDrop={(e) => handleDrop(e)} onDragEnter={(e) => preventDrag(e)} onDragOver={(e) => preventDrag(e)} onDragLeave={(e) => preventLeaveDrag(e)}>
             <label htmlFor="fileInput" className={styles.dropzone} className={cn(styles.dropzone, {[styles.dropzone__dragover]: dragOver})}>
                 {!fileList?.length && < Flex align="center" justify="center" height="100%" width="100%" direction="column">
-                    <IconContext.Provider value={{ color: "blue", size: "5em" }}>
+                    <IconContext.Provider value={{ color: "#3182ce", size: "5em" }}>
                         <PiImagesSquareDuotone style={{margin: '0 auto 30px'}}/>
                     </IconContext.Provider>
                     <Heading>Загрузка изображений</Heading>
