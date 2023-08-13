@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import { Flex, Grid, Heading, Text, useToast  } from '@chakra-ui/react'
 import { IconContext } from "react-icons";
 import { PiImagesSquareDuotone } from "react-icons/pi"
-import axios, { AxiosProgressEvent } from 'axios'
+import { AxiosProgressEvent } from 'axios'
 import cn from "classnames"
 import FilePreview from "@/components/filePreview/filePreview"
 import styles from "@/styles/dropzone.module.scss"
@@ -30,13 +30,13 @@ const DropZone = (): JSX.Element => {
     ]
 
     const handleFiles = (e: Event):void => {
-        let files = [...e.target.files]
+        let files = [...e.target?.files]
         fileProcessing(files)
     }
 
-    const handleDrop = (e: Event):void => {
+    const handleDrop = (e: DragEvent):void => {
         e.preventDefault();
-        let files = [...e.dataTransfer.files]
+        let files = [...e.dataTransfer?.files]
         fileProcessing(files)
     }
 
@@ -62,7 +62,6 @@ const DropZone = (): JSX.Element => {
     }
 
     const checkFile = (info: File):boolean => {
-        console.log('CheckFile', info);
         if(info.size / (1024*1024) > 3) {
             toast({
                 title: 'Ошибка',
@@ -87,10 +86,9 @@ const DropZone = (): JSX.Element => {
     const removeFile = (e: Event, item:IItem) => {
         e.stopPropagation();
         e.preventDefault();
-        console.log("REMOVE", item)
 
         if(item.status === 'Loaded') {
-            setFileList(fileList.filter((file:IItem) => (file !== item)))
+            setFileList(fileList?.filter((file:IItem) => (file !== item)))
 
             toast({
                 title: 'Успешно',
@@ -124,7 +122,9 @@ const DropZone = (): JSX.Element => {
         if(fileItem.status !== 'Loaded') {
             fileItem.status = 'Started'
             upload(fileItem.file, (e: AxiosProgressEvent):void => {
-                setProgress(Math.round((100 * e.loaded) / e.total))
+                if(e.total) {
+                    setProgress(Math.round((100 * e.loaded) / e.total))
+                }
             }, () =>{
                 toast({
                     title: 'Ошибка',

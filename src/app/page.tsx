@@ -1,10 +1,8 @@
 "use client";
 
 import { Flex, Text } from '@chakra-ui/react'
-import { useCityQuery } from '@/lib/cities/queries'
 
 import Dropzone from "@/components/dropZone/dropZone"
-import { Action } from 'react-query/types/core/query';
 
 export default function Home() {
   return (

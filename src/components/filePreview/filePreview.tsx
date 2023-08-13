@@ -1,18 +1,27 @@
 "use client";
 
-import {useState, useEffect} from 'react';
+import {useState, MouseEventHandler} from 'react';
 import { Box, GridItem, Image, Spinner, Progress } from '@chakra-ui/react'
 import { IconContext } from "react-icons";
 import { PiTrashBold } from "react-icons/pi"
 import cn from "classnames"
 import styles from "@/styles/dropzone.module.scss"
 
-const filePreview = ({info, progress, onClick}): JSX.Element => {
-    const [preview, setPreview] = useState<String>('data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==')
+export interface StandardComponentProps {
+    info: {
+        file: File,
+        status: string
+    },
+    progress: number,
+    onClick: MouseEventHandler<HTMLDivElement>
+}
+
+const filePreview = ({info, progress, onClick}: StandardComponentProps): JSX.Element => {
+    const [preview, setPreview] = useState<string>('data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==')
 
     const reader:FileReader = new FileReader();
     reader.addEventListener('load', (e) => {
-        setPreview(e.target?.result as String)
+        setPreview(e.target?.result as string)
     })
     reader.readAsDataURL(info.file)
 
