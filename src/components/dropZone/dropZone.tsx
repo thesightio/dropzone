@@ -109,10 +109,8 @@ const DropZone = ({maxSize, availableTypes}: StandardComponentProps): JSX.Elemen
 
     const uploadFiles = async(fileItems: IItem[]) => {
         try {
-            let i:number = 0
             for(const item of fileItems) {
                 await uploadFile(item);
-                i++;
             }
         } catch (e) {
             console.error(e)
