@@ -1,5 +1,6 @@
 $cubic: cubic-bezier(0.445, 0.050, 0.550, 0.950);
 $time: 0.15s;
+$blue: #3182ce;
 
 .dropzone {
     position:relative;
@@ -13,11 +14,16 @@ $time: 0.15s;
     flex-direction: column;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0px 5px 15px 7px rgba(34, 60, 80, 0);
-    transition: box-shadow $time $cubic;
+    box-shadow: 0px 5px 15px 7px rgba($blue, 0);
+    transition: box-shadow $time $cubic, border $time $cubic;
+
+    &:hover {
+        border-color: $blue;
+    }
 
     &__dragover {
-        box-shadow: 0px 15px 30px 7px rgba(34, 60, 80, 0.2);
+        border-color: $blue;
+        box-shadow: 0px 15px 30px 7px rgba($blue, 0.2);
     }
 
     &__input {
