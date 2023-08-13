@@ -1,6 +1,12 @@
 import axios from 'axios'
 
-const upload = (file:File, onUploadProgress:any, onError: any, onFinnaly: any) => {
+export enum InfoStatus {
+  Loaded = "Loaded",
+  Started = "Started",
+  Pending = "Pending"
+}
+
+export const upload = (file:File, onUploadProgress:any, onError: any, onFinnaly: any) => {
   let formData:FormData = new FormData();
 
   formData.append("file", file);

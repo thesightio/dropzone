@@ -2,7 +2,7 @@
 
 import { Flex, Text } from '@chakra-ui/react'
 
-import Dropzone from "@/components/dropZone/dropZone"
+import Dropzone from "@/components/DropZone"
 
 export default function Home() {
   const availableTypes = [
