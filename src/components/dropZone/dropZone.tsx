@@ -105,7 +105,7 @@ const DropZone = ({maxSize, availableTypes}: StandardComponentProps): JSX.Elemen
         if (fileList?.length) {
             uploadFiles(fileList)
         }
-    }, [fileList])
+    }, [fileList?.length])
 
     const uploadFiles = async(fileItems: IItem[]) => {
         try {
