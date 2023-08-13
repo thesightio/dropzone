@@ -11,23 +11,21 @@ import upload from "@/services/UploadService";
 
 const PreviewItem = React.memo(FilePreview)
 
+export interface StandardComponentProps {
+    maxSize: number,
+    availableTypes: string[]
+}
+
 interface IItem {
     file: File,
     status: String
 }
 
-const DropZone = (): JSX.Element => {
+const DropZone = ({maxSize, availableTypes}: StandardComponentProps): JSX.Element => {
     const toast = useToast()
     const [fileList, setFileList] = useState<IItem[]>()
     const [progress, setProgress] = useState<Number>(0)
     const [dragOver, setDragOver] = useState<Boolean>(false)
-
-    const availableTypes = [
-        'image/jpeg',
-        'image/png',
-        'image/gif',
-        'image/webp'
-    ]
 
     const handleFiles = (e: Event):void => {
         let files = [...e.target?.files]
@@ -62,12 +60,13 @@ const DropZone = (): JSX.Element => {
     }
 
     const checkFile = (info: File):boolean => {
-        if(info.size / (1024*1024) > 3) {
+        if(info.size / (1024*1024) > maxSize) {
             toast({
                 title: 'Ошибка',
                 description: "Фаил превышает 3мб.",
                 status: 'error',
-                isClosable: true
+                isClosable: true,
+                position: 'bottom-right'
             })
             return false
         }
@@ -76,7 +75,8 @@ const DropZone = (): JSX.Element => {
                 title: 'Ошибка',
                 description: "Формат файла не поддерживается",
                 status: 'error',
-                isClosable: true
+                isClosable: true,
+                position: 'bottom-right'
             })
             return false
         }
@@ -96,6 +96,7 @@ const DropZone = (): JSX.Element => {
                 status: 'success',
                 duration: 9000,
                 isClosable: true,
+                position: 'bottom-right'
             })
         }
     }
@@ -132,6 +133,7 @@ const DropZone = (): JSX.Element => {
                     status: 'error',
                     duration: 9000,
                     isClosable: true,
+                    position: 'bottom-right'
                 })
                 reject(true)
             }, () => {
