@@ -1,7 +1,6 @@
 "use client";
 
 import { Flex, Text } from '@chakra-ui/react'
-
 import Dropzone from "@/components/DropZone"
 
 export default function Home() {

@@ -33,7 +33,7 @@ const DropZone = ({maxSize, availableTypes}: StandardComponentProps): JSX.Elemen
         fileProcessing(files)
     }
 
-    const handleDrop = (e):void => {
+    const handleDrop = (e:DragEvent):void => {
         e.preventDefault();
         let files = [...e.dataTransfer?.files]
         fileProcessing(files)
@@ -57,7 +57,7 @@ const DropZone = ({maxSize, availableTypes}: StandardComponentProps): JSX.Elemen
             })
         }
 
-        setFileList(fileList !== undefined ? fileList.concat(files) : files)
+        setFileList(fileList?.concat(files) ?? files)
     }
 
     const checkFile = (info: File):boolean => {
